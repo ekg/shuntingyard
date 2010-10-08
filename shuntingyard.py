@@ -94,8 +94,8 @@ def infix_to_prefix(expr):
             #pop o2 off the stack, onto the output queue;
             #push o1 onto the stack.
             while len(ops) > 0 and is_op(ops[-1]) and \
-                    ( (associativity(token) == 'left' and precedence(token) <= ops[-1]) \
-                 or   (associativity(token) == 'right' and precedence(token) < ops[-1]) ):
+                    ( (associativity(token) == 'left' and precedence(token) <= precedence(ops[-1])) \
+                 or   (associativity(token) == 'right' and precedence(token) < precedence(ops[-1])) ):
                 results.append(ops.pop())
             ops.append(token)
         #If the token is a left parenthesis, then push it onto the stack.
@@ -131,6 +131,6 @@ def infix_to_prefix(expr):
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         print "usage", sys.argv[0], "\"infix boolean expression\""
-        print "e.g. \"( true & false | ( true & !true ) )\""
+        print "e.g. \"( true & false | ( true & ! true ) )\""
         exit()
     print ' '.join(infix_to_prefix(sys.argv[1]))
